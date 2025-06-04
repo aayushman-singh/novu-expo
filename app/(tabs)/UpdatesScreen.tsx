@@ -8,8 +8,8 @@ export default function UpdatesScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F5F5F5" />
       <NovuProvider
-        subscriberId="<Subscriber ID>"
-        applicationIdentifier="<Application ID>"
+        subscriberId="683fca0bf43b5880d26e406e"
+        applicationIdentifier="B3GsFiU8FPXI"
       >
         <UpdatesList />
       </NovuProvider>
