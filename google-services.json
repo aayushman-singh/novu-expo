@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "668968092679",
+    "project_id": "novu-demo-7d306",
+    "storage_bucket": "novu-demo-7d306.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668968092679:android:16147a3455eeab11a156a2",
+        "android_client_info": {
+          "package_name": "com.aayushman.novuchangelogapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFkc1329yphX7C16VOhsYccWeHH9_72eQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668968092679:android:19d20d4480c4955ea156a2",
+        "android_client_info": {
+          "package_name": "com.aayushmansingh.novuchangelogapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFkc1329yphX7C16VOhsYccWeHH9_72eQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

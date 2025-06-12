@@ -7,7 +7,8 @@ node_modules/
 .expo/
 dist/
 web-build/
-
+/android
+/ios
 # Native
 *.orig.*
 *.jks
@@ -39,3 +40,5 @@ yarn-error.*
 
 expo-env.d.ts
 # @end expo-cli
+natural-choir-459612-r7-582768a8faf8.json
+novu-demo-7d306-firebase-adminsdk-fbsvc-ff4316ba3b.json
