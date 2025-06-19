@@ -3,6 +3,9 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { View, Text, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
+import { Platform } from "react-native";
+import { registerExpoTokenWithNovu } from "@/components/novu";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -30,11 +33,77 @@ function TabBarIcon(props: {
   );
 }
 
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== "granted") {
+      console.log("Permission not granted for push notifications");
+      return;
+    }
+
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log("Expo Push Token:", token);
+  } else {
+    console.log("Not a physical device, cannot get push token");
+    return;
+  }
+
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+    console.log("Android notification channel set");
+  }
+
+  return token;
+}
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const unreadCount = useUnreadCount();
 
   useEffect(() => {
+    console.log("0. TabLayout useEffect started");
+    
+    async function setupPushNotifications() {
+      console.log("1. Inside setupPushNotifications");
+      
+      try {
+        console.log("2. Starting push notification setup...");
+        const subscriberId = "aayushman-027";
+        
+        console.log("3. About to call registerForPushNotificationsAsync");
+        const token = await registerForPushNotificationsAsync();
+        console.log("4. After registerForPushNotificationsAsync, token:", token);
+        
+        if (token) {
+          console.log("5. Got token, about to call registerExpoTokenWithNovu");
+          await registerExpoTokenWithNovu(subscriberId, token);
+          console.log("6. Successfully registered with Novu");
+        } else {
+          console.log("5b. Token was null or undefined");
+        }
+        
+        console.log("7. Finished setupPushNotifications");
+      } catch (error: any) {
+        console.error("8. Top level error in setupPushNotifications:", error.message);
+      }
+    }
+
+    setupPushNotifications();
+
     const subscriptionReceived = Notifications.addNotificationReceivedListener(
       (notification) => {
         console.log("Notification received:", notification);
