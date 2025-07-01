@@ -42,13 +42,21 @@ export async function registerForPushNotificationsAsync() {
   return token;
 }
 
-export async function registerAndSyncPushToken(subscriberId: string) {
+export async function registerAndSyncPushToken(
+  subscriberId: string,
+  userData?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+  }
+) {
   console.log("Starting push token registration for subscriber:", subscriberId);
   try {
     const token = await registerForPushNotificationsAsync();
     if (token) {
       console.log("Registering token with Novu...");
-      await registerExpoTokenWithNovu(subscriberId, token);
+      await registerExpoTokenWithNovu(subscriberId, token, userData);
       console.log("Successfully registered token with Novu");
     } else {
       console.log("No token received, skipping Novu registration");

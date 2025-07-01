@@ -5,14 +5,14 @@ import { View, Text, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
-import { registerExpoTokenWithNovu } from "@/components/novu";
+import { registerWithBothServices, testUserData } from "@/components/novu";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 
 const useUnreadCount = () => {
-  return 5; // Example: 5 unread messages
+  return 0; // Example:  unread messages
 };
 
 function TabBarIcon(props: {
@@ -82,16 +82,16 @@ export default function TabLayout() {
       
       try {
         console.log("2. Starting push notification setup...");
-        const subscriberId = "aayushman-027";
+        const subscriberId = "683fca0bf43b5880d26e406e";
         
         console.log("3. About to call registerForPushNotificationsAsync");
         const token = await registerForPushNotificationsAsync();
         console.log("4. After registerForPushNotificationsAsync, token:", token);
         
         if (token) {
-          console.log("5. Got token, about to call registerExpoTokenWithNovu");
-          await registerExpoTokenWithNovu(subscriberId, token);
-          console.log("6. Successfully registered with Novu");
+          console.log("5. Got token, about to call registerWithBothServices");
+          const result = await registerWithBothServices(subscriberId, token, testUserData.johnDoe);
+          console.log("6. Registration result:", result);
         } else {
           console.log("5b. Token was null or undefined");
         }
