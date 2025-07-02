@@ -13,7 +13,8 @@ export const API_CONFIG = {
   localServer: {
     apiKey: "51f9cf6dfe05ff1ec1ba06785b43f8ef",
     url: "http://192.168.18.34:3000", // Update with your actual IP
-    endpoint: "/v2/subscribers",
+    endpoint: "/v1/subscribers",
+    integrationId: "expo-push", // Expo integration ID
   },
 };
 

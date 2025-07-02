@@ -8,6 +8,7 @@ const NOVU_ENVIRONMENT_ID = API_CONFIG.novu.environmentId;
 const LOCAL_SERVER_URL = API_CONFIG.localServer.url;
 const LOCAL_SERVER_ENDPOINT = API_CONFIG.localServer.endpoint;
 const LOCAL_SERVER_API_KEY = API_CONFIG.localServer.apiKey;
+const LOCAL_SERVER_INTEGRATION_ID = API_CONFIG.localServer.integrationId;
 
 export async function registerExpoTokenWithNovu(
   subscriberId: string,
@@ -170,13 +171,19 @@ export async function sendToLocalServer(
     
     const payload = {
       subscriberId,
-      expoPushToken,
       firstName: userData?.firstName || subscriberId,
       lastName: userData?.lastName || '',
       email: userData?.email || '',
       phone: userData?.phone || '',
-      timestamp: new Date().toISOString(),
-      source: 'expo-app'
+      channels: [
+        {
+          providerId: 'expo',
+          integrationIdentifier: LOCAL_SERVER_INTEGRATION_ID,
+          credentials: {
+            deviceTokens: [expoPushToken]
+          }
+        }
+      ]
     };
     
     console.log("LOCAL_SERVER_D. Sending payload to local server:", payload);
