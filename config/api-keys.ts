@@ -1,5 +1,4 @@
 // API Keys Configuration
-// Update these values with your actual API keys and server details
 
 export const API_CONFIG = {
   // Novu Configuration
